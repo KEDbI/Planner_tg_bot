@@ -32,7 +32,7 @@ def load_bot_config(path: str | None = None) -> BotConfig:
     return BotConfig(tgbot=TgBot(token=env('TOKEN')))
 
 
-def connect_database(path: str | None = None) -> DatabaseConfig:
+def load_database_config(path: str | None = None) -> DatabaseConfig:
     env: Env = Env()
     env.read_env(path)
     return DatabaseConfig(db=Database(
