@@ -148,14 +148,17 @@ class GlobalTasks(Database):
                            f'WHERE {self.user_id_column_name} = {self.user_id} '
                            f'AND task_id = {task_id}')
 
-    def get_ids_of_active_tasks(self):
+    def get_ids_of_active_tasks(self) -> list:
         with psycopg2.connect(database=db_config.db.database_name, user=db_config.db.user,
                               password=db_config.db.password, host=db_config.db.host, port=db_config.db.port) as conn:
             cursor = conn.cursor()
-            cursor.execute(f'SELECT id FROM {self.table_name}'
-                           f'WHERE {self.user_id_column_name} = {self.user_id}'
-                           f'AND is done = false')
+            cursor.execute(f'SELECT task_id FROM {self.table_name} '
+                           f'WHERE {self.user_id_column_name} = {self.user_id} '
+                           f'AND is_done = false')
+            lst: list = []
+            for row in cursor:
+                lst.append(row[0])
+            return lst
 
 
 db = GlobalTasks(1274018099)
-db.insert_task(task_name='go fishing')
