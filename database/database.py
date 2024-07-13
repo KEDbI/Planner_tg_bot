@@ -159,6 +159,3 @@ class GlobalTasks(Database):
             for row in cursor:
                 lst.append(row[0])
             return lst
-
-
-db = GlobalTasks(1274018099)
